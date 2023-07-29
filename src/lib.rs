@@ -11,10 +11,11 @@ pub trait HasLimit: TransientState {
 }
 
 pub type LimitMap = BTreeMap<String, (Duration, usize)>;
+pub type RouteTracker = BTreeMap<String, Vec<Instant>>;
 
 #[derive(Default, Clone, Debug)]
 pub struct Limiter {
-    map: Arc<Mutex<BTreeMap<String, BTreeMap<String, Vec<Instant>>>>>,
+    map: Arc<Mutex<BTreeMap<String, RouteTracker>>>,
     limits: LimitMap,
 }
 
@@ -35,7 +36,7 @@ impl Limiter {
                     let mut tmp = Vec::new();
                     for limit in &mut *limitlist {
                         if Instant::now().duration_since(*limit) < routelimit.0 {
-                            tmp.push(limit.clone())
+                            tmp.push(*limit)
                         }
                     }
 
@@ -56,25 +57,25 @@ impl Limiter {
                 if let Some(limit) = self.limits.get(route) {
                     if limit.1 > routemap.len() {
                         routemap.push(Instant::now());
-                        return Ok(());
+                        Ok(())
                     } else {
-                        return Err(Error::new("API limit reached".to_string()));
+                        Err(Error::new("API limit reached".to_string()))
                     }
                 } else {
                     // no API limit
-                    return Ok(());
+                    Ok(())
                 }
             } else {
                 // no entries yet
                 keymap.insert(route.to_string(), vec![Instant::now()]);
-                return Ok(());
+                Ok(())
             }
         } else {
             // API key does not exist yet (create a new one)
-            let mut item = BTreeMap::default();
+            let mut item = RouteTracker::default();
             item.insert(route.to_string(), vec![Instant::now()]);
             lock.insert(key.to_string(), item);
-            return Ok(());
+            Ok(())
         }
     }
 }
@@ -109,7 +110,7 @@ pub async fn with_limits(
         None => return Err(Error::new("no API key present".to_string())),
     }
 
-    return Ok((req, resp, _state));
+    Ok((req, resp, _state))
 }
 
 #[cfg(test)]
