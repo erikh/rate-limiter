@@ -35,6 +35,11 @@ several breaks to think about it, and the challenge I received yesterday, but
 spent most of the evening on a Friday night considering ways to solve it while
 flooding my brain with malt beverages.
 
+On Sunday (7/30), I reworked the example to have a dynamic router, so all the routes
+you program into the config work, an oversight I made. I also took a clippy
+pass Saturday sometime. I got bored and decided to noodle on it a bit. Hope
+that's ok.
+
 Thanks for the opportunity.
 
 -Erik

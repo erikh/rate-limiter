@@ -75,12 +75,9 @@ async fn main() -> Result<(), ServerError> {
 
     let mut app: App<AppState, NoState> = App::with_state(AppState::new(limiter.clone()));
 
-    app.get("/test1", compose_handler!(with_limits, mock_handler))
-        .unwrap();
-    app.get("/test2", compose_handler!(with_limits, mock_handler))
-        .unwrap();
-    app.get("/test3", compose_handler!(with_limits, mock_handler))
-        .unwrap();
+    for (route, _) in &config.0 {
+        app.get(route, compose_handler!(with_limits, mock_handler))?;
+    }
 
     tokio::spawn(async move { observe_limits(limiter).await.unwrap() });
 
