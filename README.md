@@ -1,5 +1,7 @@
 # rate limiting example with davisjr
 
+Some introduction:
+
 [davisjr](https://github.com/erikh/davisjr) is derived from the
 [ratpack](https://github.com/zerotier/ratpack) crate I developed for zerotier
 for the construction of the [coyote](https://github.com/zerotier/coyote)
@@ -35,6 +37,9 @@ To run the example:
 ```
 cargo run --example limit-handler example_config.yaml # or provide your own config
 ```
+
+It listens on `0.0.0.0:8000` and the routes are programmed as a part of the
+configuration file.
 
 To run the tests:
 
