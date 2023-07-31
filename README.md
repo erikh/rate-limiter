@@ -30,6 +30,18 @@ similar to golang durations and their text representations. The provided
 configuration file uses one second intervals, which are represented as "1s",
 for example.
 
+To run the example:
+
+```
+cargo run --example limit-handler example_config.yaml # or provide your own config
+```
+
+To run the tests:
+
+```
+cargo test
+```
+
 This took approximately 3 hours to code from `cargo new` to now, but I took
 several breaks to think about it, and the challenge I received yesterday, but
 spent most of the evening on a Friday night considering ways to solve it while
