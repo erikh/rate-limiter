@@ -7,7 +7,6 @@ edition = "2021"
 
 [dependencies]
 davisjr = "*"
-thiserror = "*"
 http = "*"
 tokio = { version = "*", features = [ "full" ] }
 
