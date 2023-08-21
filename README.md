@@ -1,5 +1,8 @@
 # rate limiting example with davisjr
 
+davisjr is a small HTTP framework I wrote for rust-lang. Here's an example of a
+rate limiting middleware I composed with it for a job interview.
+
 Some introduction:
 
 [davisjr](https://github.com/erikh/davisjr) is derived from the
